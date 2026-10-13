@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  @apply bg-paper font-sans font-medium text-ink antialiased;
+  background-image:
+    linear-gradient(rgba(11, 11, 11, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 11, 11, 0.055) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+::selection { background: #C6FF3D; color: #0B0B0B; }
+
+.num { font-variant-numeric: tabular-nums lining-nums; }
+
+@layer components {
+  .link { @apply font-bold underline decoration-2 underline-offset-[3px] hover:text-accent-dark; }
+
+  .eyebrow {
+    @apply inline-block border-3 border-ink bg-sun px-2.5 py-1 font-display text-[11px] uppercase tracking-[0.12em] text-ink shadow-brut-sm;
+  }
+  .eyebrow-plain { @apply font-display text-[12px] uppercase tracking-[0.12em] text-ink-mute; }
+
+  .brut-card { @apply border-3 border-ink bg-card shadow-brut; }
+
+  .sticker {
+    @apply inline-flex items-center gap-1.5 border-3 border-ink px-3 py-1.5 font-display text-[13px] uppercase text-ink shadow-brut-sm;
+  }
+
+  .field {
+    @apply h-14 w-full border-3 border-ink bg-card px-4 text-[17px] font-bold text-ink outline-none transition
+           shadow-[inset_4px_4px_0_rgba(11,11,11,0.06)] placeholder:font-medium placeholder:text-ink-mute/70
+           focus:shadow-[5px_5px_0_#00C27A];
+  }
+  .field[aria-invalid="true"] { @apply border-signal bg-[#FFE4E1]; }
+
+  .btn {
+    @apply inline-flex h-14 items-center justify-center gap-2.5 border-3 border-ink bg-card px-6 font-display text-[15px] uppercase tracking-[0.04em] text-ink shadow-brut
+           transition-[transform,box-shadow,background-color] duration-100
+           hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_#0B0B0B]
+           active:translate-x-[3px] active:translate-y-[3px] active:shadow-[2px_2px_0_#0B0B0B]
+           disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-brut
+           focus-visible:outline-dashed focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-ink;
+  }
+  .btn-primary { @apply btn bg-accent hover:bg-lime; }
+  .btn-ghost { @apply btn h-12 bg-card px-4 text-[13px]; }
+  .btn-xl { @apply h-[68px] px-9 text-[19px] shadow-brut-lg hover:shadow-[11px_11px_0_#0B0B0B]; }
+
+  .kbd { @apply mx-0.5 border-2 border-ink bg-card px-1.5 py-0.5 font-sans text-[11px] font-bold shadow-[2px_2px_0_#0B0B0B]; }
+
+  .outline-text { -webkit-text-stroke: 3px #0B0B0B; paint-order: stroke fill; }
+}
+
+/* ─── Motion ─── */
+.screen-in { animation: screen-in .4s cubic-bezier(.2,.9,.2,1) both; }
+.opt-in { animation: opt-in .45s cubic-bezier(.34,1.56,.64,1) both; }
+.fact-pop { animation: fact-pop .55s cubic-bezier(.34,1.56,.64,1) both; }
+.wiggle { animation: wiggle 3s ease-in-out infinite; }
+.bounce-y { animation: bounce-y 1.6s ease-in-out infinite; }
+.tick-in { animation: tick-in .25s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes screen-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes opt-in { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes fact-pop { from { opacity: 0; transform: scale(.9) rotate(-2deg); } to { opacity: 1; transform: none; } }
+@keyframes wiggle { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+@keyframes bounce-y { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+@keyframes tick-in { from { transform: scale(0); } to { transform: scale(1); } }
+
+/* One-shot money rain over the result hero */
+.money-drop { opacity: 0; animation: money-drop 1.8s cubic-bezier(.4,.1,.6,1) both; }
+@keyframes money-drop {
+  0% { opacity: 0; transform: translateY(-40px) rotate(0); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(420px) rotate(220deg); }
+}
+
+.marquee { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.stripes { background-image: repeating-linear-gradient(135deg, transparent 0 10px, rgba(255,255,255,.35) 10px 20px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
